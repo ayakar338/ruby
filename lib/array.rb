@@ -45,3 +45,38 @@ numbers.each do |n|
   smu += sum_value
 end
 # sum = 64
+
+# ブロックを使う配列のメソッド
+# map/collectあらかじめ空の配列を用意しなくても新しい配列に返してくれるメソッド
+number = [1,2,3,4,5]
+new_number = number.map{ |n| n*10 }
+new_number #= [10,20,30,40,50]
+
+# select/find_all各要素に対してブロックを評価し、真である要素だけ配列で返すメソッド
+number = [1,2,3,4,5]
+even_number = number.select { |n| n.even? } #偶数かどうか
+even_number #=[2,4]
+# rejectメソッドは反対に偽である要素だけ配列で返すメソッド
+number = [1,2,3,4,5]
+non_multiples_of_three = number.reject { |n| n % 3 == 0}
+non_multiples_of_three #=[1,2,4,5]
+
+# find/detectブロックの戻り値が真になった最初の要素を返す
+number = [1,2,3,4,5]
+even_number = number.find { |n| n.even? }
+even_number #=2
+
+#inject/reduceたたみ演算を行うメソッド
+number = [1,2,3,4,5]
+sum = 0
+number.each {|n| sum += n}
+sum #=15
+# injectメソッドを使うと
+number = [1,2,3,4,5]
+sum = number.inject(0) {|result, n| result + n } # 初回のみresultには0が入り、その後は戻り値が入る
+sum #=15
+
+# &:を使うとブロックがシンプルに ＊ただしブロック内で引数を渡したり、複数の文を実行したり、演算子を使ったり、複雑なものは不可
+[1,2,3,4,5].select {|n| n.odd? }
+# 上記の式を:& を使うと省略できる
+[1,2,3,4,5].select(&:odd?)
